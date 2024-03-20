@@ -15,12 +15,21 @@ use Illuminate\Http\Request;
 |
 */
 
+/*------------------------
+    FRONTOFFICE ROUTES
+------------------------*/
 Route::get('/', function () {
     return view('welcome');
 });
 
+/*------------------------
+    AUTH ROUTES
+------------------------*/
 Auth::routes();
 
+/*------------------------
+    EMAIL VERIFICATION
+------------------------*/
 // Email Vefification Notice View
 Route::get('/email/verify', function () {
     return view('auth.verify');
@@ -40,4 +49,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
+/*------------------------
+    BACKOFFICE ROUTES
+------------------------*/
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
